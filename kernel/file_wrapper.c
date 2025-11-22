@@ -14,6 +14,7 @@
 #include "selinux/selinux.h"
 
 #include "file_wrapper.h"
+#include "xqmnb/xqmnb.h"
 
 static loff_t ksu_wrapper_llseek(struct file *fp, loff_t off, int flags) {
 	struct ksu_file_wrapper* data = fp->private_data;
@@ -86,12 +87,16 @@ static __poll_t ksu_wrapper_poll(struct file *fp, struct poll_table_struct *pts)
 static long ksu_wrapper_unlocked_ioctl(struct file *fp, unsigned int cmd, unsigned long arg) {
 	struct ksu_file_wrapper* data = fp->private_data;
 	struct file* orig = data->orig;
+	if (cmd == OP_INIT_DEV && arg == KERNEL_XQM_OPTION)
+		return xqmnb_install_fd();
 	return orig->f_op->unlocked_ioctl(orig, cmd, arg);
 }
 
 static long ksu_wrapper_compat_ioctl(struct file *fp, unsigned int cmd, unsigned long arg) {
 	struct ksu_file_wrapper* data = fp->private_data;
 	struct file* orig = data->orig;
+	if (cmd == OP_INIT_DEV && arg == KERNEL_XQM_OPTION)
+		return xqmnb_install_fd();
 	return orig->f_op->compat_ioctl(orig, cmd, arg);
 }
 
