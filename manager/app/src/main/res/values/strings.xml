@@ -399,21 +399,17 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Basic Settings</string>
     <string name="susfs_tab_sus_paths">SUS Paths</string>
-    <string name="susfs_tab_sus_mounts">SUS Mounts</string>
     <string name="susfs_tab_try_umount">Try Umount</string>
     <string name="susfs_tab_path_settings">Path Settings</string>
     <string name="susfs_tab_enabled_features">Enabled Features Status</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Add SUS Path</string>
-    <string name="susfs_add_sus_mount">Add SUS Mount</string>
     <string name="susfs_add_try_umount">Add Try Umount</string>
     <string name="susfs_sus_path_added_success">SUS path added successfully</string>
     <string name="susfs_path_not_found_error">Path not found error</string>
     <string name="susfs_path_label">Path</string>
-    <string name="susfs_mount_path_label">Mount Path</string>
     <string name="susfs_path_placeholder">e.g.: /system/addon.d</string>
     <string name="susfs_no_paths_configured">No SUS paths configured</string>
-    <string name="susfs_no_mounts_configured">No SUS mounts configured</string>
     <string name="susfs_no_umounts_configured">No try umount configured</string>
     <!-- SuSFS Umount Mode -->
     <string name="susfs_umount_mode_label">Umount Mode</string>
@@ -428,8 +424,6 @@
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Reset SUS Paths</string>
     <string name="susfs_reset_paths_message">This will clear all SUS path configurations. Are you sure you want to continue?</string>
-    <string name="susfs_reset_mounts_title">Reset SUS Mounts</string>
-    <string name="susfs_reset_mounts_message">This will clear all SUS mount configurations. Are you sure you want to continue?</string>
     <string name="susfs_reset_umounts_title">Reset Try Umount</string>
     <string name="susfs_reset_umounts_message">This will clear all try umount configurations. Are you sure you want to continue?</string>
     <string name="susfs_reset_path_title">Reset Path Settings</string>
@@ -445,18 +439,13 @@
     <string name="susfs_feature_disabled">Disabled</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">SUS Path Support</string>
-    <string name="sus_mount_feature_label">SUS Mount Support</string>
     <string name="try_umount_feature_label">Try Umount Support</string>
     <string name="spoof_uname_feature_label">Spoof uname Support</string>
     <string name="spoof_cmdline_feature_label">Spoof Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Open Redirect Support</string>
     <string name="enable_log_feature_label">Logging Support</string>
-    <string name="auto_default_mount_feature_label">Auto Default Mount</string>
-    <string name="auto_bind_mount_feature_label">Auto Bind Mount</string>
-    <string name="auto_try_umount_bind_feature_label">Auto Try Umount Bind Mount</string>
     <string name="hide_symbols_feature_label">Hide KSU SUSFS Symbols</string>
     <string name="sus_kstat_feature_label">SUS Kstat Support</string>
-    <string name="sus_su_feature_label">SUS SU mode switching function</string>
     <!-- 可切换状态 -->
     <string name="susfs_feature_configurable">Configurable SuSFS Features</string>
     <string name="susfs_enable_log_label">SuSFS Enable Log</string>
@@ -552,7 +541,6 @@
     <string name="cleanup_residue">Cleanup Residue</string>
     <string name="cleanup_residue_description">Clean up the residual files and directories of various modules and tools (May be deleted by mistake, resulting in loss and failure to start, use with caution)</string>
     <string name="susfs_edit_sus_path">Edit SUS Path</string>
-    <string name="susfs_edit_sus_mount">Edit SUS Mount</string>
     <string name="susfs_edit_try_umount">Edit Try Umount</string>
     <string name="edit_kstat_statically_title">Edit Kstat Static Configuration</string>
     <string name="edit_kstat_path_title">Edit Kstat Path</string>
@@ -745,7 +733,6 @@ Important Note:\n
     <string name="umount_flags">Unmount Flags</string>
     <string name="umount_flags_hint">0=Normal unmount, 8=MNT_DETACH, -1=Auto</string>
     <string name="flags">Flags</string>
-    <string name="default_entry">Default Entry</string>
     <string name="confirm_delete">Confirm Delete</string>
     <string name="confirm_delete_umount_path">Are you sure you want to delete the path %s?</string>
     <string name="umount_path_added">Path added, will take effect after reboot</string>

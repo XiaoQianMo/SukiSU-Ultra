@@ -44,7 +44,6 @@ object SuSFSManager {
     private const val KEY_SUS_LOOP_PATHS = "sus_loop_paths"
 
     private const val KEY_SUS_MAPS = "sus_maps"
-    private const val KEY_SUS_MOUNTS = "sus_mounts"
     private const val KEY_TRY_UMOUNTS = "try_umounts"
     private const val KEY_ANDROID_DATA_PATH = "android_data_path"
     private const val KEY_SDCARD_PATH = "sdcard_path"
@@ -157,7 +156,6 @@ object SuSFSManager {
         val susPaths: Set<String>,
         val susLoopPaths: Set<String>,
         val susMaps: Set<String>,
-        val susMounts: Set<String>,
         val tryUmounts: Set<String>,
         val androidDataPath: String,
         val sdcardPath: String,
@@ -180,7 +178,6 @@ object SuSFSManager {
                     susPaths.isNotEmpty() ||
                     susLoopPaths.isNotEmpty() ||
                     susMaps.isNotEmpty() ||
-                    susMounts.isNotEmpty() ||
                     tryUmounts.isNotEmpty() ||
                     kstatConfigs.isNotEmpty() ||
                     addKstatPaths.isNotEmpty()
@@ -271,7 +268,6 @@ object SuSFSManager {
             susPaths = getSusPaths(context),
             susLoopPaths = getSusLoopPaths(context),
             susMaps = getSusMaps(context),
-            susMounts = getSusMounts(context),
             tryUmounts = getTryUmounts(context),
             androidDataPath = getAndroidDataPath(context),
             sdcardPath = getSdcardPath(context),
@@ -380,12 +376,6 @@ object SuSFSManager {
 
     fun getSusMaps(context: Context): Set<String> =
         getPrefs(context).getStringSet(KEY_SUS_MAPS, emptySet()) ?: emptySet()
-
-    fun saveSusMounts(context: Context, mounts: Set<String>) =
-        getPrefs(context).edit { putStringSet(KEY_SUS_MOUNTS, mounts) }
-
-    fun getSusMounts(context: Context): Set<String> =
-        getPrefs(context).getStringSet(KEY_SUS_MOUNTS, emptySet()) ?: emptySet()
 
     fun saveTryUmounts(context: Context, umounts: Set<String>) =
         getPrefs(context).edit { putStringSet(KEY_TRY_UMOUNTS, umounts) }
@@ -547,7 +537,6 @@ object SuSFSManager {
             KEY_SUS_PATHS to getSusPaths(context),
             KEY_SUS_LOOP_PATHS to getSusLoopPaths(context),
             KEY_SUS_MAPS to getSusMaps(context),
-            KEY_SUS_MOUNTS to getSusMounts(context),
             KEY_TRY_UMOUNTS to getTryUmounts(context),
             KEY_ANDROID_DATA_PATH to getAndroidDataPath(context),
             KEY_SDCARD_PATH to getSdcardPath(context),
@@ -860,13 +849,11 @@ object SuSFSManager {
 
         val featureMap = mapOf(
             "CONFIG_KSU_SUSFS_SUS_PATH" to context.getString(R.string.sus_path_feature_label),
-            "CONFIG_KSU_SUSFS_SUS_MOUNT" to context.getString(R.string.sus_mount_feature_label),
             "CONFIG_KSU_SUSFS_TRY_UMOUNT" to context.getString(R.string.try_umount_feature_label),
             "CONFIG_KSU_SUSFS_SPOOF_UNAME" to context.getString(R.string.spoof_uname_feature_label),
             "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG" to context.getString(R.string.spoof_cmdline_feature_label),
             "CONFIG_KSU_SUSFS_OPEN_REDIRECT" to context.getString(R.string.open_redirect_feature_label),
             "CONFIG_KSU_SUSFS_ENABLE_LOG" to context.getString(R.string.enable_log_feature_label),
-            "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT" to context.getString(R.string.auto_try_umount_bind_feature_label),
             "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS" to context.getString(R.string.hide_symbols_feature_label),
             "CONFIG_KSU_SUSFS_SUS_KSTAT" to context.getString(R.string.sus_kstat_feature_label),
         )
@@ -890,13 +877,11 @@ object SuSFSManager {
     private fun getDefaultDisabledFeatures(context: Context): List<EnabledFeature> {
         val defaultFeatures = listOf(
             "sus_path_feature_label" to context.getString(R.string.sus_path_feature_label),
-            "sus_mount_feature_label" to context.getString(R.string.sus_mount_feature_label),
             "try_umount_feature_label" to context.getString(R.string.try_umount_feature_label),
             "spoof_uname_feature_label" to context.getString(R.string.spoof_uname_feature_label),
             "spoof_cmdline_feature_label" to context.getString(R.string.spoof_cmdline_feature_label),
             "open_redirect_feature_label" to context.getString(R.string.open_redirect_feature_label),
             "enable_log_feature_label" to context.getString(R.string.enable_log_feature_label),
-            "auto_try_umount_bind_feature_label" to context.getString(R.string.auto_try_umount_bind_feature_label),
             "hide_symbols_feature_label" to context.getString(R.string.hide_symbols_feature_label),
             "sus_kstat_feature_label" to context.getString(R.string.sus_kstat_feature_label),
         )
@@ -1178,54 +1163,6 @@ object SuSFSManager {
         } catch (e: Exception) {
             e.printStackTrace()
             showToast(context, "Error updating SUS map: ${e.message}")
-            false
-        }
-    }
-
-    // 添加SUS挂载
-    suspend fun addSusMount(context: Context, mount: String): Boolean {
-        val success = executeSusfsCommand(context, "add_sus_mount '$mount'")
-        if (success) {
-            saveSusMounts(context, getSusMounts(context) + mount)
-            if (isAutoStartEnabled(context)) updateMagiskModule(context)
-        }
-        return success
-    }
-
-    suspend fun removeSusMount(context: Context, mount: String): Boolean {
-        saveSusMounts(context, getSusMounts(context) - mount)
-        if (isAutoStartEnabled(context)) updateMagiskModule(context)
-        showToast(context, "Removed SUS mount: $mount")
-        return true
-    }
-
-    // 编辑SUS挂载
-    suspend fun editSusMount(context: Context, oldMount: String, newMount: String): Boolean {
-        return try {
-            val currentMounts = getSusMounts(context).toMutableSet()
-            if (!currentMounts.remove(oldMount)) {
-                showToast(context, "Original mount not found: $oldMount")
-                return false
-            }
-
-            saveSusMounts(context, currentMounts)
-
-            val success = addSusMount(context, newMount)
-
-            if (success) {
-                showToast(context, "SUS mount updated: $oldMount -> $newMount")
-                return true
-            } else {
-                // 如果添加新挂载点失败，恢复旧挂载点
-                currentMounts.add(oldMount)
-                saveSusMounts(context, currentMounts)
-                if (isAutoStartEnabled(context)) updateMagiskModule(context)
-                showToast(context, "Failed to update mount, reverted to original")
-                return false
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showToast(context, "Error updating SUS mount: ${e.message}")
             false
         }
     }

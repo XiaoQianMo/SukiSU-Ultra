@@ -26,13 +26,13 @@ object ScriptGenerator {
     }
 
     // 日志相关的通用脚本片段
-    private fun generateLogSetup(logFileName: String): String = """
+    private fun generateLogSetup(logFileName: String): String = $$"""
         # 日志目录
-        LOG_DIR="$LOG_DIR"
-        LOG_FILE="${'$'}LOG_DIR/$logFileName"
+        LOG_DIR="$$LOG_DIR"
+        LOG_FILE="$LOG_DIR/$$logFileName"
         
         # 创建日志目录
-        mkdir -p "${'$'}LOG_DIR"
+        mkdir -p "$LOG_DIR"
         
         # 获取当前时间
         get_current_time() {
@@ -41,11 +41,11 @@ object ScriptGenerator {
     """.trimIndent()
 
     // 二进制文件检查的通用脚本片段
-    private fun generateBinaryCheck(targetPath: String): String = """
+    private fun generateBinaryCheck(targetPath: String): String = $$"""
         # 检查SuSFS二进制文件
-        SUSFS_BIN="$targetPath"
-        if [ ! -f "${'$'}SUSFS_BIN" ]; then
-            echo "$(get_current_time): SuSFS二进制文件未找到: ${'$'}SUSFS_BIN" >> "${'$'}LOG_FILE"
+        SUSFS_BIN="$$targetPath"
+        if [ ! -f "$SUSFS_BIN" ]; then
+            echo "$(get_current_time): SuSFS二进制文件未找到: $SUSFS_BIN" >> "$LOG_FILE"
             exit 1
         fi
     """.trimIndent()
@@ -94,7 +94,7 @@ object ScriptGenerator {
                 generateCleanupResidueSection()
             }
 
-            appendLine("echo \"$(get_current_time): Service脚本执行完成\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Service脚本执行完成\" >> \"$LOG_FILE\"")
         }
     }
 
@@ -112,16 +112,16 @@ object ScriptGenerator {
     private fun StringBuilder.generateLogSettingSection(enableLog: Boolean) {
         appendLine("# 设置日志启用状态")
         val logValue = if (enableLog) 1 else 0
-        appendLine("\"${'$'}SUSFS_BIN\" enable_log $logValue")
-        appendLine("echo \"$(get_current_time): 日志功能设置为: ${if (enableLog) "启用" else "禁用"}\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"\"$SUSFS_BIN\" enable_log $$logValue")
+        appendLine($$"echo \"$(get_current_time): 日志功能设置为: $${if (enableLog) "启用" else "禁用"}\" >> \"$LOG_FILE\"")
         appendLine()
     }
 
     private fun StringBuilder.generateAvcLogSpoofingSection(enableAvcLogSpoofing: Boolean) {
         appendLine("# 设置AVC日志欺骗状态")
         val avcLogValue = if (enableAvcLogSpoofing) 1 else 0
-        appendLine("\"${'$'}SUSFS_BIN\" enable_avc_log_spoofing $avcLogValue")
-        appendLine("echo \"$(get_current_time): AVC日志欺骗功能设置为: ${if (enableAvcLogSpoofing) "启用" else "禁用"}\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"\"$SUSFS_BIN\" enable_avc_log_spoofing $$avcLogValue")
+        appendLine($$"echo \"$(get_current_time): AVC日志欺骗功能设置为: $${if (enableAvcLogSpoofing) "启用" else "禁用"}\" >> \"$LOG_FILE\"")
         appendLine()
     }
 
@@ -129,8 +129,8 @@ object ScriptGenerator {
         if (susPaths.isNotEmpty()) {
             appendLine("# 添加SUS路径")
             susPaths.forEach { path ->
-                appendLine("\"${'$'}SUSFS_BIN\" add_sus_path '$path'")
-                appendLine("echo \"$(get_current_time): 添加SUS路径: $path\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" add_sus_path '$$path'")
+                appendLine($$"echo \"$(get_current_time): 添加SUS路径: $$path\" >> \"$LOG_FILE\"")
             }
             appendLine()
         }
@@ -140,8 +140,8 @@ object ScriptGenerator {
         if (susLoopPaths.isNotEmpty()) {
             appendLine("# 添加SUS循环路径")
             susLoopPaths.forEach { path ->
-                appendLine("\"${'$'}SUSFS_BIN\" add_sus_path_loop '$path'")
-                appendLine("echo \"$(get_current_time): 添加SUS循环路径: $path\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" add_sus_path_loop '$$path'")
+                appendLine($$"echo \"$(get_current_time): 添加SUS循环路径: $$path\" >> \"$LOG_FILE\"")
             }
             appendLine()
         }
@@ -156,8 +156,8 @@ object ScriptGenerator {
         if (addKstatPaths.isNotEmpty()) {
             appendLine("# 添加Kstat路径")
             addKstatPaths.forEach { path ->
-                appendLine("\"${'$'}SUSFS_BIN\" add_sus_kstat '$path'")
-                appendLine("echo \"$(get_current_time): 添加Kstat路径: $path\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" add_sus_kstat '$$path'")
+                appendLine($$"echo \"$(get_current_time): 添加Kstat路径: $$path\" >> \"$LOG_FILE\"")
             }
             appendLine()
         }
@@ -171,11 +171,11 @@ object ScriptGenerator {
                     val path = parts[0]
                     val params = parts.drop(1).joinToString("' '", "'", "'")
                     appendLine()
-                    appendLine("\"${'$'}SUSFS_BIN\" add_sus_kstat_statically '$path' $params")
-                    appendLine("echo \"$(get_current_time): 添加Kstat静态配置: $path\" >> \"${'$'}LOG_FILE\"")
+                    appendLine($$"\"$SUSFS_BIN\" add_sus_kstat_statically '$$path' $$params")
+                    appendLine($$"echo \"$(get_current_time): 添加Kstat静态配置: $$path\" >> \"$LOG_FILE\"")
                     appendLine()
-                    appendLine("\"${'$'}SUSFS_BIN\" update_sus_kstat '$path'")
-                    appendLine("echo \"$(get_current_time): 更新Kstat配置: $path\" >> \"${'$'}LOG_FILE\"")
+                    appendLine($$"\"$SUSFS_BIN\" update_sus_kstat '$$path'")
+                    appendLine($$"echo \"$(get_current_time): 更新Kstat配置: $$path\" >> \"$LOG_FILE\"")
                 }
             }
             appendLine()
@@ -185,8 +185,8 @@ object ScriptGenerator {
     private fun StringBuilder.generateUnameSection(config: SuSFSManager.ModuleConfig) {
         if (!config.executeInPostFsData && (config.unameValue != DEFAULT_UNAME || config.buildTimeValue != DEFAULT_BUILD_TIME)) {
             appendLine("# 设置uname和构建时间")
-            appendLine("\"${'$'}SUSFS_BIN\" set_uname '${config.unameValue}' '${config.buildTimeValue}'")
-            appendLine("echo \"$(get_current_time): 设置uname为: ${config.unameValue}, 构建时间为: ${config.buildTimeValue}\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"\"$SUSFS_BIN\" set_uname '$${config.unameValue}' '$${config.buildTimeValue}'")
+            appendLine($$"echo \"$(get_current_time): 设置uname为: $${config.unameValue}, 构建时间为: $${config.buildTimeValue}\" >> \"$LOG_FILE\"")
             appendLine()
         }
     }
@@ -194,44 +194,44 @@ object ScriptGenerator {
     private fun StringBuilder.generateHideBlSection() {
         appendLine("# 隐藏BL 来自 Shamiko 脚本")
         appendLine(
-            """
+            $$"""
         RESETPROP_BIN="/data/adb/ksu/bin/resetprop"
         
         check_reset_prop() {
             local NAME=$1
             local EXPECTED=$2
-            local VALUE=$("${'$'}RESETPROP_BIN" ${'$'}NAME)
-            [ -z ${'$'}VALUE ] || [ ${'$'}VALUE = ${'$'}EXPECTED ] || "${'$'}RESETPROP_BIN" ${'$'}NAME ${'$'}EXPECTED
+            local VALUE=$("$RESETPROP_BIN" $NAME)
+            [ -z $VALUE ] || [ $VALUE = $EXPECTED ] || "$RESETPROP_BIN" $NAME $EXPECTED
         }
         
         check_missing_prop() {
             local NAME=$1
             local EXPECTED=$2
-            local VALUE=$("${'$'}RESETPROP_BIN" ${'$'}NAME)
-            [ -z ${'$'}VALUE ] && "${'$'}RESETPROP_BIN" ${'$'}NAME ${'$'}EXPECTED
+            local VALUE=$("$RESETPROP_BIN" $NAME)
+            [ -z $VALUE ] && "$RESETPROP_BIN" $NAME $EXPECTED
         }
         
         check_missing_match_prop() {
             local NAME=$1
             local EXPECTED=$2
-            local VALUE=$("${'$'}RESETPROP_BIN" ${'$'}NAME)
-            [ -z ${'$'}VALUE ] || [ ${'$'}VALUE = ${'$'}EXPECTED ] || "${'$'}RESETPROP_BIN" ${'$'}NAME ${'$'}EXPECTED
-            [ -z ${'$'}VALUE ] && "${'$'}RESETPROP_BIN" ${'$'}NAME ${'$'}EXPECTED
+            local VALUE=$("$RESETPROP_BIN" $NAME)
+            [ -z $VALUE ] || [ $VALUE = $EXPECTED ] || "$RESETPROP_BIN" $NAME $EXPECTED
+            [ -z $VALUE ] && "$RESETPROP_BIN" $NAME $EXPECTED
         }
         
         contains_reset_prop() {
             local NAME=$1
             local CONTAINS=$2
             local NEWVAL=$3
-            case "$("${'$'}RESETPROP_BIN" ${'$'}NAME)" in
-                *"${'$'}CONTAINS"*) "${'$'}RESETPROP_BIN" ${'$'}NAME ${'$'}NEWVAL ;;
+            case "$("$RESETPROP_BIN" $NAME)" in
+                *"$CONTAINS"*) "$RESETPROP_BIN" $NAME $NEWVAL ;;
             esac
         }
     """.trimIndent())
         appendLine()
         appendLine("sleep 30")
         appendLine()
-        appendLine("\"${'$'}RESETPROP_BIN\" -w sys.boot_completed 0")
+        appendLine($$"\"$RESETPROP_BIN\" -w sys.boot_completed 0")
 
         // 添加所有系统属性重置
         val systemProps = listOf(
@@ -292,27 +292,28 @@ object ScriptGenerator {
     // 清理残留脚本生成
     private fun StringBuilder.generateCleanupResidueSection() {
         appendLine("# 清理工具残留文件")
-        appendLine("echo \"$(get_current_time): 开始清理工具残留\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"echo \"$(get_current_time): 开始清理工具残留\" >> \"$LOG_FILE\"")
         appendLine()
 
         // 定义清理函数
-        appendLine("""
+        appendLine(
+            $$"""
         cleanup_path() {
             local path="$1"
             local desc="$2"
             local current="$3"
             local total="$4"
             
-            if [ -n "${'$'}desc" ]; then
-                echo "$(get_current_time): [${'$'}current/${'$'}total] 清理: ${'$'}path (${'$'}desc)" >> "${'$'}LOG_FILE"
+            if [ -n "$desc" ]; then
+                echo "$(get_current_time): [$current/$total] 清理: $path ($desc)" >> "$LOG_FILE"
             else
-                echo "$(get_current_time): [${'$'}current/${'$'}total] 清理: ${'$'}path" >> "${'$'}LOG_FILE"
+                echo "$(get_current_time): [$current/$total] 清理: $path" >> "$LOG_FILE"
             fi
             
-            if rm -rf "${'$'}path" 2>/dev/null; then
-                echo "$(get_current_time): ✓ 成功清理: ${'$'}path" >> "${'$'}LOG_FILE"
+            if rm -rf "$path" 2>/dev/null; then
+                echo "$(get_current_time): ✓ 成功清理: $path" >> "$LOG_FILE"
             else
-                echo "$(get_current_time): ✗ 清理失败或不存在: ${'$'}path" >> "${'$'}LOG_FILE"
+                echo "$(get_current_time): ✗ 清理失败或不存在: $path" >> "$LOG_FILE"
             fi
         }
     """.trimIndent())
@@ -360,11 +361,11 @@ object ScriptGenerator {
 
         cleanupPaths.forEachIndexed { index, (path, desc) ->
             val current = index + 1
-            appendLine("cleanup_path '$path' '$desc' $current \$TOTAL")
+            appendLine($$"cleanup_path '$$path' '$$desc' $$current $TOTAL")
         }
 
         appendLine()
-        appendLine("echo \"$(get_current_time): 工具残留清理完成\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"echo \"$(get_current_time): 工具残留清理完成\" >> \"$LOG_FILE\"")
         appendLine()
     }
 
@@ -381,14 +382,14 @@ object ScriptGenerator {
             appendLine()
             appendLine(generateBinaryCheck(config.targetPath))
             appendLine()
-            appendLine("echo \"$(get_current_time): Post-FS-Data脚本开始执行\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Post-FS-Data脚本开始执行\" >> \"$LOG_FILE\"")
             appendLine()
 
             // 设置uname和构建时间 - 只有在选择在post-fs-data中执行时才执行
             if (config.executeInPostFsData && (config.unameValue != DEFAULT_UNAME || config.buildTimeValue != DEFAULT_BUILD_TIME)) {
                 appendLine("# 设置uname和构建时间")
-                appendLine("\"${'$'}SUSFS_BIN\" set_uname '${config.unameValue}' '${config.buildTimeValue}'")
-                appendLine("echo \"$(get_current_time): 设置uname为: ${config.unameValue}, 构建时间为: ${config.buildTimeValue}\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" set_uname '$${config.unameValue}' '$${config.buildTimeValue}'")
+                appendLine($$"echo \"$(get_current_time): 设置uname为: $${config.unameValue}, 构建时间为: $${config.buildTimeValue}\" >> \"$LOG_FILE\"")
                 appendLine()
             }
 
@@ -397,7 +398,7 @@ object ScriptGenerator {
             // 添加AVC日志欺骗设置
             generateAvcLogSpoofingSection(config.enableAvcLogSpoofing)
 
-            appendLine("echo \"$(get_current_time): Post-FS-Data脚本执行完成\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Post-FS-Data脚本执行完成\" >> \"$LOG_FILE\"")
         }
     }
 
@@ -406,8 +407,8 @@ object ScriptGenerator {
         if (support158) {
             appendLine("# 设置Zygote隔离服务卸载状态")
             val umountValue = if (umountForZygoteIsoService) 1 else 0
-            appendLine("\"${'$'}SUSFS_BIN\" umount_for_zygote_iso_service $umountValue")
-            appendLine("echo \"$(get_current_time): Zygote隔离服务卸载设置为: ${if (umountForZygoteIsoService) "启用" else "禁用"}\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"\"$SUSFS_BIN\" umount_for_zygote_iso_service $$umountValue")
+            appendLine($$"echo \"$(get_current_time): Zygote隔离服务卸载设置为: $${if (umountForZygoteIsoService) "启用" else "禁用"}\" >> \"$LOG_FILE\"")
             appendLine()
         }
     }
@@ -423,20 +424,10 @@ object ScriptGenerator {
             appendLine()
             appendLine(generateLogSetup("susfs_post_mount.log"))
             appendLine()
-            appendLine("echo \"$(get_current_time): Post-Mount脚本开始执行\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Post-Mount脚本开始执行\" >> \"$LOG_FILE\"")
             appendLine()
             appendLine(generateBinaryCheck(config.targetPath))
             appendLine()
-
-            // 添加SUS挂载
-            if (config.susMounts.isNotEmpty()) {
-                appendLine("# 添加SUS挂载")
-                config.susMounts.forEach { mount ->
-                    appendLine("\"${'$'}SUSFS_BIN\" add_sus_mount '$mount'")
-                    appendLine("echo \"$(get_current_time): 添加SUS挂载: $mount\" >> \"${'$'}LOG_FILE\"")
-                }
-                appendLine()
-            }
 
             // 添加尝试卸载
             if (config.tryUmounts.isNotEmpty()) {
@@ -446,14 +437,14 @@ object ScriptGenerator {
                     if (parts.size == 2) {
                         val path = parts[0]
                         val mode = parts[1]
-                        appendLine("\"${'$'}SUSFS_BIN\" add_try_umount '$path' $mode")
-                        appendLine("echo \"$(get_current_time): 添加尝试卸载: $path (模式: $mode)\" >> \"${'$'}LOG_FILE\"")
+                        appendLine($$"\"$SUSFS_BIN\" add_try_umount '$$path' $$mode")
+                        appendLine($$"echo \"$(get_current_time): 添加尝试卸载: $$path (模式: $$mode)\" >> \"$LOG_FILE\"")
                     }
                 }
                 appendLine()
             }
 
-            appendLine("echo \"$(get_current_time): Post-Mount脚本执行完成\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Post-Mount脚本执行完成\" >> \"$LOG_FILE\"")
         }
     }
 
@@ -469,7 +460,7 @@ object ScriptGenerator {
             appendLine()
             appendLine(generateLogSetup("susfs_boot_completed.log"))
             appendLine()
-            appendLine("echo \"$(get_current_time): Boot-Completed脚本开始执行\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Boot-Completed脚本开始执行\" >> \"$LOG_FILE\"")
             appendLine()
             appendLine(generateBinaryCheck(config.targetPath))
             appendLine()
@@ -479,8 +470,8 @@ object ScriptGenerator {
                 // SUS挂载隐藏控制
                 val hideValue = if (config.hideSusMountsForAllProcs) 1 else 0
                 appendLine("# 设置SUS挂载隐藏控制")
-                appendLine("\"${'$'}SUSFS_BIN\" hide_sus_mnts_for_all_procs $hideValue")
-                appendLine("echo \"$(get_current_time): SUS挂载隐藏控制设置为: ${if (config.hideSusMountsForAllProcs) "对所有进程隐藏" else "仅对非KSU进程隐藏"}\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" hide_sus_mnts_for_all_procs $$hideValue")
+                appendLine($$"echo \"$(get_current_time): SUS挂载隐藏控制设置为: $${if (config.hideSusMountsForAllProcs) "对所有进程隐藏" else "仅对非KSU进程隐藏"}\" >> \"$LOG_FILE\"")
                 appendLine()
 
                 // 路径设置和SUS路径设置
@@ -504,7 +495,7 @@ object ScriptGenerator {
                 }
             }
 
-            appendLine("echo \"$(get_current_time): Boot-Completed脚本执行完成\" >> \"${'$'}LOG_FILE\"")
+            appendLine($$"echo \"$(get_current_time): Boot-Completed脚本执行完成\" >> \"$LOG_FILE\"")
         }
     }
 
@@ -512,8 +503,8 @@ object ScriptGenerator {
         if (susMaps.isNotEmpty()) {
             appendLine("# 添加SUS映射")
             susMaps.forEach { map ->
-                appendLine("\"${'$'}SUSFS_BIN\" add_sus_map '$map'")
-                appendLine("echo \"$(get_current_time): 添加SUS映射: $map\" >> \"${'$'}LOG_FILE\"")
+                appendLine($$"\"$SUSFS_BIN\" add_sus_map '$$map'")
+                appendLine($$"echo \"$(get_current_time): 添加SUS映射: $$map\" >> \"$LOG_FILE\"")
             }
             appendLine()
         }
@@ -526,12 +517,12 @@ object ScriptGenerator {
         appendLine("until [ -d \"/sdcard/Android\" ]; do sleep 1; done")
         appendLine("sleep 60")
         appendLine()
-        appendLine("\"${'$'}SUSFS_BIN\" set_android_data_root_path '$androidDataPath'")
-        appendLine("echo \"$(get_current_time): Android Data路径设置为: $androidDataPath\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"\"$SUSFS_BIN\" set_android_data_root_path '$$androidDataPath'")
+        appendLine($$"echo \"$(get_current_time): Android Data路径设置为: $$androidDataPath\" >> \"$LOG_FILE\"")
         appendLine()
         appendLine("# 设置SD卡路径")
-        appendLine("\"${'$'}SUSFS_BIN\" set_sdcard_root_path '$sdcardPath'")
-        appendLine("echo \"$(get_current_time): SD卡路径设置为: $sdcardPath\" >> \"${'$'}LOG_FILE\"")
+        appendLine($$"\"$SUSFS_BIN\" set_sdcard_root_path '$$sdcardPath'")
+        appendLine($$"echo \"$(get_current_time): SD卡路径设置为: $$sdcardPath\" >> \"$LOG_FILE\"")
         appendLine()
     }
 
