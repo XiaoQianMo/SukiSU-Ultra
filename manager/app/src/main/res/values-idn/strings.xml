@@ -382,33 +382,20 @@ Tanamkan: Secara permanen memasang ke sistem</string>
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Pengaturan Dasar</string>
     <string name="susfs_tab_sus_paths">Jalur SUS</string>
-    <string name="susfs_tab_try_umount">Coba Lepas Kait</string>
     <string name="susfs_tab_path_settings">Pengaturan Jalur</string>
     <string name="susfs_tab_enabled_features">Status Fitur Diaktifkan</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Tambah Jalur SUS</string>
-    <string name="susfs_add_try_umount">Tambah Coba Lepas Kait</string>
     <string name="susfs_sus_path_added_success">Jalur SUS berhasil ditambahkan</string>
     <string name="susfs_path_not_found_error">Kesalahan: Jalur tidak ditemukan</string>
     <string name="susfs_path_label">Jalur</string>
     <string name="susfs_path_placeholder">misalnya: /system/addon.d</string>
     <string name="susfs_no_paths_configured">Tidak ada jalur SUS yang dikonfigurasi</string>
-    <string name="susfs_no_umounts_configured">Tidak ada coba lepas kait yang dikonfigurasi</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Mode Lepas Kait</string>
-    <string name="susfs_umount_mode_normal">Lepas Kait Normal (0)</string>
-    <string name="susfs_umount_mode_detach">Lepas Kait Terpisah (1)</string>
-    <string name="susfs_umount_mode_normal_short">Normal</string>
-    <string name="susfs_umount_mode_detach_short">Terpisah</string>
-    <string name="susfs_umount_mode_display">Mode: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Jalur coba lepas kait berhasil ditambahkan: %s</string>
-    <string name="susfs_try_umount_added_saved">Berhasil menyimpan jalur coba lepas kait: %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Atur Ulang Jalur SUS</string>
     <string name="susfs_reset_paths_message">Ini akan menghapus semua konfigurasi jalur SUS. Apakah Anda yakin ingin melanjutkan?</string>
-    <string name="susfs_reset_umounts_title">Atur Ulang Coba Lepas Kait</string>
-    <string name="susfs_reset_umounts_message">Ini akan menghapus semua konfigurasi coba lepas kait. Apakah Anda yakin ingin melanjutkan?</string>
     <string name="susfs_reset_path_title">Atur Ulang Pengaturan Jalur</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Jalur Data Android</string>
@@ -422,7 +409,6 @@ Tanamkan: Secara permanen memasang ke sistem</string>
     <string name="susfs_feature_disabled">Dinonaktifkan</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">Dukungan Jalur SUS</string>
-    <string name="try_umount_feature_label">Dukungan Coba Lepas Kait</string>
     <string name="spoof_uname_feature_label">Dukungan Spoof Uname</string>
     <string name="spoof_cmdline_feature_label">Spoof Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Dukungan Open Redirect</string>

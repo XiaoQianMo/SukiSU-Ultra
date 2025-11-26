@@ -387,33 +387,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Temel Ayarlar</string>
     <string name="susfs_tab_sus_paths">SUS Yolları</string>
-    <string name="susfs_tab_try_umount">Bağlamayı Kaldırmayı Dene</string>
     <string name="susfs_tab_path_settings">Yol Ayarları</string>
     <string name="susfs_tab_enabled_features">Etkinleştirilen Özellikler Durumu</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">SUS Yolu Ekle</string>
-    <string name="susfs_add_try_umount">Bağlamayı Kaldırmayı Dene Ekle</string>
     <string name="susfs_sus_path_added_success">SUS yolu başarıyla eklendi</string>
     <string name="susfs_path_not_found_error">Yol bulunamadı hatası</string>
     <string name="susfs_path_label">Yol</string>
     <string name="susfs_path_placeholder">örn.: /system/addon.d</string>
     <string name="susfs_no_paths_configured">Yapılandırılmış SUS yolu yok</string>
-    <string name="susfs_no_umounts_configured">Yapılandırılmış bağlamayı kaldırmayı dene yok</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Bağlamayı Kaldır Modu</string>
-    <string name="susfs_umount_mode_normal">Normal Bağlamayı Kaldır (0)</string>
-    <string name="susfs_umount_mode_detach">Ayrı Bağlamayı Kaldır (1)</string>
-    <string name="susfs_umount_mode_normal_short">Normal</string>
-    <string name="susfs_umount_mode_detach_short">Ayrı</string>
-    <string name="susfs_umount_mode_display">Mod: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Bağlamayı kaldırmayı dene yolu başarıyla eklendi: %s</string>
-    <string name="susfs_try_umount_added_saved">Bağlamayı kaldırmayı dene yolu kaydetme başarılı: %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">SUS Yollarını Sıfırla</string>
     <string name="susfs_reset_paths_message">Bu, tüm SUS yol yapılandırmalarını temizleyecektir. Devam etmek istiyor musunuz?</string>
-    <string name="susfs_reset_umounts_title">Bağlamayı Kaldırmayı Dene Sıfırla</string>
-    <string name="susfs_reset_umounts_message">Bu, tüm bağlamayı kaldırmayı dene yapılandırmalarını temizleyecektir. Devam etmek istiyor musunuz?</string>
     <string name="susfs_reset_path_title">Yol Ayarlarını Sıfırla</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Android Veri Yolu</string>
@@ -427,7 +414,6 @@
     <string name="susfs_feature_disabled">Devre Dışı Bırakıldı</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">SUS Yol Desteği</string>
-    <string name="try_umount_feature_label">Bağlamayı Kaldırmayı Dene Desteği</string>
     <string name="spoof_uname_feature_label">Uname Taklit Desteği</string>
     <string name="spoof_cmdline_feature_label">Cmdline/Bootconfig Taklit</string>
     <string name="open_redirect_feature_label">Açık Yönlendirme Desteği</string>
@@ -529,7 +515,6 @@
     <string name="cleanup_residue">Kalıntıları Temizle</string>
     <string name="cleanup_residue_description">Çeşitli modüllerin ve araçların kalıntı dosyalarını ve dizinlerini temizleyin (yanlışlıkla silinerek kayba ve başlatılamamaya neden olabilir, dikkatli kullanın)</string>
     <string name="susfs_edit_sus_path">SUS Yolunu Düzenle</string>
-    <string name="susfs_edit_try_umount">Ayırmayı Deneme Yolunu Düzenle</string>
     <string name="edit_kstat_statically_title">Kstat Statik Yapılandırmasını Düzenle</string>
     <string name="edit_kstat_path_title">Kstat Yolunu Düzenle</string>
     <string name="susfs_save">Kaydet</string>

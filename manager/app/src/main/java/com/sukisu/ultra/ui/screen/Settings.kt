@@ -505,18 +505,15 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             )
                         }
                     }
-                    val lkmMode = Natives.isLkmMode
                     KsuIsValid {
-                        if (lkmMode) {
-                            SettingItem(
-                                icon = Icons.Filled.FolderOff,
-                                title = stringResource(R.string.umount_path_manager),
-                                summary = stringResource(R.string.umount_path_manager_summary),
-                                onClick = {
-                                    navigator.navigate(UmountManagerScreenDestination)
-                                }
-                            )
-                        }
+                        SettingItem(
+                            icon = Icons.Filled.FolderOff,
+                            title = stringResource(R.string.umount_path_manager),
+                            summary = stringResource(R.string.umount_path_manager_summary),
+                            onClick = {
+                                navigator.navigate(UmountManagerScreenDestination)
+                            }
+                        )
                     }
 
                     if (showBottomsheet) {
@@ -560,7 +557,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             }
                         )
                     }
-                    if (lkmMode) {
+                    if (Natives.isLkmMode) {
                         UninstallItem(navigator) {
                             loadingDialog.withLoading(it)
                         }

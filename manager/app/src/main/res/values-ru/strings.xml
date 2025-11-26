@@ -390,33 +390,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Базовые настройки</string>
     <string name="susfs_tab_sus_paths">SUS пути</string>
-    <string name="susfs_tab_try_umount">Попробовать размонтировать</string>
     <string name="susfs_tab_path_settings">Настройки пути</string>
     <string name="susfs_tab_enabled_features">Статус включённых функций</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Добавить SUS путь</string>
-    <string name="susfs_add_try_umount">Добавить попробовать размонтировать</string>
     <string name="susfs_sus_path_added_success">Путь SUS успешно добавлен</string>
     <string name="susfs_path_not_found_error">Ошибка пути</string>
     <string name="susfs_path_label">Путь</string>
     <string name="susfs_path_placeholder">например: /system/addon.d</string>
     <string name="susfs_no_paths_configured">SUS пути не настроены</string>
-    <string name="susfs_no_umounts_configured">Попытка размонтировать не настроена</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Режим размонтирования</string>
-    <string name="susfs_umount_mode_normal">Обычное размонтирование (0)</string>
-    <string name="susfs_umount_mode_detach">Размонтирование отсоединением (1)</string>
-    <string name="susfs_umount_mode_normal_short">Нормальный</string>
-    <string name="susfs_umount_mode_detach_short">Отсоединить</string>
-    <string name="susfs_umount_mode_display">Режим: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Попытка размонтировать путь успешно добавлена： %s</string>
-    <string name="susfs_try_umount_added_saved">Попытка размонтировать путь успешно сохранена： %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Сбросить SUS пути</string>
     <string name="susfs_reset_paths_message">Это очистит все конфигурации пути SUS. Вы уверены, что хотите продолжить?</string>
-    <string name="susfs_reset_umounts_title">Сбросить Umount</string>
-    <string name="susfs_reset_umounts_message">Это очистит все конфигурации размонтирования. Вы уверены, что хотите продолжить?</string>
     <string name="susfs_reset_path_title">Сбросить настройки пути</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Путь к данным Android</string>
@@ -430,7 +417,6 @@
     <string name="susfs_feature_disabled">Выключено</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">Поддержка SUS пути</string>
-    <string name="try_umount_feature_label">Поддержка размонтирования</string>
     <string name="spoof_uname_feature_label">Поддержка подмены uname</string>
     <string name="spoof_cmdline_feature_label">Подмена Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Поддержка Open Redirect</string>
@@ -532,7 +518,6 @@
     <string name="cleanup_residue">Очистка</string>
     <string name="cleanup_residue_description">Очистка остаточных файлов и каталогов различных модулей и инструментов (может быть удален по ошибке, в результате потери и неспособности начаться, используйте с осторожностью)</string>
     <string name="susfs_edit_sus_path">Редактировать путь SUS</string>
-    <string name="susfs_edit_try_umount">Изменить попробовать размонтировать</string>
     <string name="edit_kstat_statically_title">Изменить статическую конфигурацию Kstat</string>
     <string name="edit_kstat_path_title">Редактировать путь Kstat</string>
     <string name="susfs_save">Сохранить</string>

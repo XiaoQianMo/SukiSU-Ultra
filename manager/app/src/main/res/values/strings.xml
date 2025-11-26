@@ -399,33 +399,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Basic Settings</string>
     <string name="susfs_tab_sus_paths">SUS Paths</string>
-    <string name="susfs_tab_try_umount">Try Umount</string>
     <string name="susfs_tab_path_settings">Path Settings</string>
     <string name="susfs_tab_enabled_features">Enabled Features Status</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Add SUS Path</string>
-    <string name="susfs_add_try_umount">Add Try Umount</string>
     <string name="susfs_sus_path_added_success">SUS path added successfully</string>
     <string name="susfs_path_not_found_error">Path not found error</string>
     <string name="susfs_path_label">Path</string>
     <string name="susfs_path_placeholder">e.g.: /system/addon.d</string>
     <string name="susfs_no_paths_configured">No SUS paths configured</string>
-    <string name="susfs_no_umounts_configured">No try umount configured</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Umount Mode</string>
-    <string name="susfs_umount_mode_normal">Normal Umount (0)</string>
-    <string name="susfs_umount_mode_detach">Detach Umount (1)</string>
-    <string name="susfs_umount_mode_normal_short">Normal</string>
-    <string name="susfs_umount_mode_detach_short">Detach</string>
-    <string name="susfs_umount_mode_display">Mode: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Try to umount path added successfully： %s</string>
-    <string name="susfs_try_umount_added_saved">Attempted umount path save succeeded： %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Reset SUS Paths</string>
     <string name="susfs_reset_paths_message">This will clear all SUS path configurations. Are you sure you want to continue?</string>
-    <string name="susfs_reset_umounts_title">Reset Try Umount</string>
-    <string name="susfs_reset_umounts_message">This will clear all try umount configurations. Are you sure you want to continue?</string>
     <string name="susfs_reset_path_title">Reset Path Settings</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Android Data Path</string>
@@ -439,7 +426,6 @@
     <string name="susfs_feature_disabled">Disabled</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">SUS Path Support</string>
-    <string name="try_umount_feature_label">Try Umount Support</string>
     <string name="spoof_uname_feature_label">Spoof uname Support</string>
     <string name="spoof_cmdline_feature_label">Spoof Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Open Redirect Support</string>
@@ -541,7 +527,6 @@
     <string name="cleanup_residue">Cleanup Residue</string>
     <string name="cleanup_residue_description">Clean up the residual files and directories of various modules and tools (May be deleted by mistake, resulting in loss and failure to start, use with caution)</string>
     <string name="susfs_edit_sus_path">Edit SUS Path</string>
-    <string name="susfs_edit_try_umount">Edit Try Umount</string>
     <string name="edit_kstat_statically_title">Edit Kstat Static Configuration</string>
     <string name="edit_kstat_path_title">Edit Kstat Path</string>
     <string name="susfs_save">Save</string>

@@ -378,33 +378,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Cài đặt cơ bản</string>
     <string name="susfs_tab_sus_paths">Đường dẫn SuS</string>
-    <string name="susfs_tab_try_umount">Try Umount</string>
     <string name="susfs_tab_path_settings">Cài đặt Đường dẫn</string>
     <string name="susfs_tab_enabled_features">Trạng thái tính năng</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Thêm Đường dẫn SuS</string>
-    <string name="susfs_add_try_umount">Thêm Try Umount</string>
     <string name="susfs_sus_path_added_success">Đường dẫn SuS đã được thêm thành công</string>
     <string name="susfs_path_not_found_error">Lỗi không tìm thấy đường dẫn</string>
     <string name="susfs_path_label">Đường dẫn</string>
     <string name="susfs_path_placeholder">Ví dụ: /system/addon.d</string>
     <string name="susfs_no_paths_configured">Không có Đường dẫn SuS nào được cấu hình</string>
-    <string name="susfs_no_umounts_configured">Không có Try Umount nào được cấu hình</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Chế độ Umount</string>
-    <string name="susfs_umount_mode_normal">Normal Umount (0)</string>
-    <string name="susfs_umount_mode_detach">Detach Umount (1)</string>
-    <string name="susfs_umount_mode_normal_short">Normal</string>
-    <string name="susfs_umount_mode_detach_short">Detach</string>
-    <string name="susfs_umount_mode_display">Chế độ: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Đường dẫn Try Umount đã thêm thành công: %s</string>
-    <string name="susfs_try_umount_added_saved">Đường dẫn Try Umount đã lưu thành công: %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Đặt lại Đường dẫn SuS</string>
     <string name="susfs_reset_paths_message">Thao tác này sẽ xóa tất cả các cấu hình Đường dẫn SuS. Bạn có chắc chắn muốn tiếp tục không?</string>
-    <string name="susfs_reset_umounts_title">Đặt lại Try Umount</string>
-    <string name="susfs_reset_umounts_message">Thao tác này sẽ xóa tất cả các cấu hình Try Umount. Bạn có chắc chắn muốn tiếp tục không?</string>
     <string name="susfs_reset_path_title">Reset Cài đặt Đường dẫn</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Đường dẫn Android Data</string>
@@ -418,7 +405,6 @@
     <string name="susfs_feature_disabled">Đã tắt</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">Hỗ trợ Đường dẫn SuS</string>
-    <string name="try_umount_feature_label">Hỗ trợ Try Umount</string>
     <string name="spoof_uname_feature_label">Hỗ trợ giả mạo Uname</string>
     <string name="spoof_cmdline_feature_label">Giả mạo Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Mở hỗ trợ chuyển hướng</string>
@@ -520,7 +506,6 @@
     <string name="cleanup_residue">Dọn rác</string>
     <string name="cleanup_residue_description">Dọn dẹp các file và folder còn sót lại của các module và công cụ (Có thể bị xóa nhầm, dẫn đến mất dữ liệu và không khởi động được)</string>
     <string name="susfs_edit_sus_path">Chỉnh sửa Đường dẫn SuS</string>
-    <string name="susfs_edit_try_umount">Chỉnh sửa Try Umount</string>
     <string name="edit_kstat_statically_title">Chỉnh sửa cấu hình Kstat tĩnh</string>
     <string name="edit_kstat_path_title">Chỉnh sửa Đường dẫn Kstat</string>
     <string name="susfs_save">Lưu</string>

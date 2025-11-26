@@ -396,33 +396,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">基本设置</string>
     <string name="susfs_tab_sus_paths">SuS 路径</string>
-    <string name="susfs_tab_try_umount">尝试卸载</string>
     <string name="susfs_tab_path_settings">路径设置</string>
     <string name="susfs_tab_enabled_features">启用功能状态</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">添加 SuS 路径</string>
-    <string name="susfs_add_try_umount">添加尝试卸载</string>
     <string name="susfs_sus_path_added_success">SuS 路径添加成功</string>
     <string name="susfs_path_not_found_error">路径未找到错误</string>
     <string name="susfs_path_label">路径</string>
     <string name="susfs_path_placeholder">例如: /system/addon.d</string>
     <string name="susfs_no_paths_configured">暂无 SuS 路径配置</string>
-    <string name="susfs_no_umounts_configured">暂无尝试卸载配置</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">卸载模式</string>
-    <string name="susfs_umount_mode_normal">普通卸载（0）</string>
-    <string name="susfs_umount_mode_detach">分离卸载（1）</string>
-    <string name="susfs_umount_mode_normal_short">普通</string>
-    <string name="susfs_umount_mode_detach_short">分离</string>
-    <string name="susfs_umount_mode_display">模式: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">尝试 umount 路径添加成功： %s</string>
-    <string name="susfs_try_umount_added_saved">尝试 umount 路径保存成功： %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">重置 SuS 路径</string>
     <string name="susfs_reset_paths_message">这将清除所有 SuS 路径配置，确定要继续吗？</string>
-    <string name="susfs_reset_umounts_title">重置尝试卸载</string>
-    <string name="susfs_reset_umounts_message">这将清除所有尝试卸载配置，确定要继续吗？</string>
     <string name="susfs_reset_path_title">重置路径设置</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Android Data 路径</string>
@@ -436,7 +423,6 @@
     <string name="susfs_feature_disabled">已禁用</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">SuS 路径支持</string>
-    <string name="try_umount_feature_label">尝试卸载支持</string>
     <string name="spoof_uname_feature_label">欺骗 uname 支持</string>
     <string name="spoof_cmdline_feature_label">欺骗 Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">开放重定向支持</string>
@@ -538,7 +524,6 @@
     <string name="cleanup_residue">清理工具残留</string>
     <string name="cleanup_residue_description">清理各种模块以及工具的残留文件和目录（可能会误删导致丢失以及无法启动，谨慎使用）</string>
     <string name="susfs_edit_sus_path">编辑 SuS 路径</string>
-    <string name="susfs_edit_try_umount">编辑尝试卸载</string>
     <string name="edit_kstat_statically_title">编辑 Kstat 静态配置</string>
     <string name="edit_kstat_path_title">编辑 Kstat 路径</string>
     <string name="susfs_save">保存</string>

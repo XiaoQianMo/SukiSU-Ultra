@@ -429,21 +429,6 @@ object ScriptGenerator {
             appendLine(generateBinaryCheck(config.targetPath))
             appendLine()
 
-            // 添加尝试卸载
-            if (config.tryUmounts.isNotEmpty()) {
-                appendLine("# 添加尝试卸载")
-                config.tryUmounts.forEach { umount ->
-                    val parts = umount.split("|")
-                    if (parts.size == 2) {
-                        val path = parts[0]
-                        val mode = parts[1]
-                        appendLine($$"\"$SUSFS_BIN\" add_try_umount '$$path' $$mode")
-                        appendLine($$"echo \"$(get_current_time): 添加尝试卸载: $$path (模式: $$mode)\" >> \"$LOG_FILE\"")
-                    }
-                }
-                appendLine()
-            }
-
             appendLine($$"echo \"$(get_current_time): Post-Mount脚本执行完成\" >> \"$LOG_FILE\"")
         }
     }

@@ -1,0 +1,17 @@
+{
+  "name": "ts",
+  "module": "send.ts",
+  "type": "module",
+  "private": true,
+  "author": "TypeFlu <TypeFlu@gmail.com> (https://Typeflu.me/)",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "grammy": "^1.38.4",
+    "zod": "^4.1.12"
+  }
+}

@@ -52,7 +52,7 @@ fun SusPathsContent(
 
     val (appPathGroups, otherPaths) = remember(susPaths) {
         val appPathRegex = Regex(".*/Android/data/([^/]+)/?.*")
-        val uidPathRegex = Regex("/sys/fs/cgroup/uid_([0-9]+)")
+        val uidPathRegex = Regex("/sys/fs/cgroup(?:/[^/]+)*/uid_([0-9]+)")
         val appPathMap = mutableMapOf<String, MutableList<String>>()
         val uidToPackageMap = mutableMapOf<String, String>()
         val others = mutableListOf<String>()
@@ -401,134 +401,6 @@ fun SusMapsContent(
                 ) {
                     Button(
                         onClick = onAddSusMap,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(48.dp),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = stringResource(R.string.add))
-                    }
-                }
-            }
-        }
-    }
-}
-
-/**
- * 尝试卸载内容组件
- */
-@Composable
-fun TryUmountContent(
-    tryUmounts: Set<String>,
-    umountForZygoteIsoService: Boolean,
-    isLoading: Boolean,
-    onAddUmount: () -> Unit,
-    onRemoveUmount: (String) -> Unit,
-    onEditUmount: ((String) -> Unit)? = null,
-    onToggleUmountForZygoteIsoService: (Boolean) -> Unit
-) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            if (isSusVersion158()) {
-                item {
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        ),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Column(
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Security,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.primary,
-                                        modifier = Modifier.size(18.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = stringResource(R.string.umount_zygote_iso_service),
-                                        style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.Medium,
-                                        color = MaterialTheme.colorScheme.onSurface
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                    text = stringResource(R.string.umount_zygote_iso_service_description),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    lineHeight = 14.sp
-                                )
-                            }
-                            Switch(
-                                checked = umountForZygoteIsoService,
-                                onCheckedChange = onToggleUmountForZygoteIsoService,
-                                enabled = !isLoading
-                            )
-                        }
-                    }
-                }
-            }
-
-            if (tryUmounts.isEmpty()) {
-                item {
-                    EmptyStateCard(
-                        message = stringResource(R.string.susfs_no_umounts_configured)
-                    )
-                }
-            } else {
-                items(tryUmounts.toList()) { umountEntry ->
-                    val parts = umountEntry.split("|")
-                    val path = if (parts.isNotEmpty()) parts[0] else umountEntry
-                    val mode = if (parts.size > 1) parts[1] else "0"
-                    val modeText = if (mode == "0")
-                        stringResource(R.string.susfs_umount_mode_normal_short)
-                    else
-                        stringResource(R.string.susfs_umount_mode_detach_short)
-
-                    PathItemCard(
-                        path = path,
-                        icon = Icons.Default.Storage,
-                        additionalInfo = stringResource(R.string.susfs_umount_mode_display, modeText, mode),
-                        onDelete = { onRemoveUmount(umountEntry) },
-                        onEdit = if (onEditUmount != null) { { onEditUmount(umountEntry) } } else null,
-                        isLoading = isLoading
-                    )
-                }
-            }
-
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(
-                        onClick = onAddUmount,
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),

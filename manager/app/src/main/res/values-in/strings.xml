@@ -389,33 +389,20 @@
     <!-- SuSFS Tab Titles -->
     <string name="susfs_tab_basic_settings">Pengaturan Dasar</string>
     <string name="susfs_tab_sus_paths">Jalur SUS</string>
-    <string name="susfs_tab_try_umount">Coba Umount</string>
     <string name="susfs_tab_path_settings">Pengaturan Path</string>
     <string name="susfs_tab_enabled_features">Status Fitur yang Diaktifkan</string>
     <!-- SuSFS Path Management -->
     <string name="susfs_add_sus_path">Tambahkan Jalur SUS</string>
-    <string name="susfs_add_try_umount">Tambahkan Coba Umount</string>
     <string name="susfs_sus_path_added_success">Jalur SUS berhasil ditambahkan</string>
     <string name="susfs_path_not_found_error">Kesalahan jalur tidak ditemukan</string>
     <string name="susfs_path_label">Jalur</string>
     <string name="susfs_path_placeholder">contoh: /system/addon.d</string>
     <string name="susfs_no_paths_configured">Tidak ada jalur SUS yang dikonfigurasi</string>
-    <string name="susfs_no_umounts_configured">Tidak ada coba umount yang dikonfigurasi</string>
     <!-- SuSFS Umount Mode -->
-    <string name="susfs_umount_mode_label">Mode Umount</string>
-    <string name="susfs_umount_mode_normal">Umount Normal (0)</string>
-    <string name="susfs_umount_mode_detach">Umount Lepas (1)</string>
-    <string name="susfs_umount_mode_normal_short">Normal</string>
-    <string name="susfs_umount_mode_detach_short">Lepas</string>
-    <string name="susfs_umount_mode_display">Mode: %1$s (%2$s)</string>
-    <string name="susfs_try_umount_added_success">Jalur coba umount berhasil ditambahkan： %s</string>
-    <string name="susfs_try_umount_added_saved">Jalur coba umount berhasil disimpan： %s</string>
     <!-- SuSFS Run Umount -->
     <!-- SuSFS Reset Categories -->
     <string name="susfs_reset_paths_title">Setel Ulang Jalur SUS</string>
     <string name="susfs_reset_paths_message">Ini akan menghapus semua konfigurasi jalur SUS. Apakah Anda yakin ingin melanjutkan?</string>
-    <string name="susfs_reset_umounts_title">Setel Ulang Coba Umount</string>
-    <string name="susfs_reset_umounts_message">Ini akan menghapus semua konfigurasi umount. Apakah Anda yakin ingin melanjutkan?</string>
     <string name="susfs_reset_path_title">Setel Ulang Pengaturan Jalur</string>
     <!-- SuSFS Path Settings -->
     <string name="susfs_android_data_path_label">Jalur Data Android</string>
@@ -429,7 +416,6 @@
     <string name="susfs_feature_disabled">Dinonaktifkan</string>
     <!-- Feature Labels -->
     <string name="sus_path_feature_label">Dukungan Jalur SUS</string>
-    <string name="try_umount_feature_label">Dukungan Coba Umount</string>
     <string name="spoof_uname_feature_label">Dukungan Spoof uname</string>
     <string name="spoof_cmdline_feature_label">Spoof Cmdline/Bootconfig</string>
     <string name="open_redirect_feature_label">Dukungan Pengalihan Terbuka</string>
@@ -531,7 +517,6 @@
     <string name="cleanup_residue">Bersihkan Residu</string>
     <string name="cleanup_residue_description">Bersihkan file dan direktori sisa dari berbagai modul dan alat (mungkin terhapus secara tidak sengaja, mengakibatkan kehilangan dan gagal memulai, gunakan dengan hati-hati)</string>
     <string name="susfs_edit_sus_path">Edit Jalur SUS</string>
-    <string name="susfs_edit_try_umount">Edit Coba Umount</string>
     <string name="edit_kstat_statically_title">Edit Konfigurasi Statis Kstat</string>
     <string name="edit_kstat_path_title">Edit Jalur Kstat</string>
     <string name="susfs_save">Simpan</string>

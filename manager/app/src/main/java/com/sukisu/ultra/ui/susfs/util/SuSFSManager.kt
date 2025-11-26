@@ -23,6 +23,7 @@ import com.sukisu.ultra.ui.util.getRootShell
 import com.sukisu.ultra.ui.util.getSuSFSVersion
 import com.sukisu.ultra.ui.util.getSuSFSFeatures
 import com.sukisu.ultra.ui.viewmodel.SuperUserViewModel
+import com.topjohnwu.superuser.io.SuFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -44,7 +45,6 @@ object SuSFSManager {
     private const val KEY_SUS_LOOP_PATHS = "sus_loop_paths"
 
     private const val KEY_SUS_MAPS = "sus_maps"
-    private const val KEY_TRY_UMOUNTS = "try_umounts"
     private const val KEY_ANDROID_DATA_PATH = "android_data_path"
     private const val KEY_SDCARD_PATH = "sdcard_path"
     private const val KEY_ENABLE_LOG = "enable_log"
@@ -70,7 +70,7 @@ object SuSFSManager {
     const val MAX_SUSFS_VERSION = "2.0.0"
     private const val BACKUP_FILE_EXTENSION = ".susfs_backup"
     private const val MEDIA_DATA_PATH = "/data/media/0/Android/data"
-    private const val CGROUP_UID_PATH_PREFIX = "/sys/fs/cgroup/uid_"
+    private const val CGROUP_BASE_PATH = "/sys/fs/cgroup"
 
     data class SlotInfo(val slotName: String, val uname: String, val buildTime: String)
     data class CommandResult(val isSuccess: Boolean, val output: String, val errorOutput: String = "")
@@ -156,7 +156,6 @@ object SuSFSManager {
         val susPaths: Set<String>,
         val susLoopPaths: Set<String>,
         val susMaps: Set<String>,
-        val tryUmounts: Set<String>,
         val androidDataPath: String,
         val sdcardPath: String,
         val enableLog: Boolean,
@@ -178,7 +177,6 @@ object SuSFSManager {
                     susPaths.isNotEmpty() ||
                     susLoopPaths.isNotEmpty() ||
                     susMaps.isNotEmpty() ||
-                    tryUmounts.isNotEmpty() ||
                     kstatConfigs.isNotEmpty() ||
                     addKstatPaths.isNotEmpty()
         }
@@ -268,7 +266,6 @@ object SuSFSManager {
             susPaths = getSusPaths(context),
             susLoopPaths = getSusLoopPaths(context),
             susMaps = getSusMaps(context),
-            tryUmounts = getTryUmounts(context),
             androidDataPath = getAndroidDataPath(context),
             sdcardPath = getSdcardPath(context),
             enableLog = getEnableLogState(context),
@@ -377,12 +374,6 @@ object SuSFSManager {
     fun getSusMaps(context: Context): Set<String> =
         getPrefs(context).getStringSet(KEY_SUS_MAPS, emptySet()) ?: emptySet()
 
-    fun saveTryUmounts(context: Context, umounts: Set<String>) =
-        getPrefs(context).edit { putStringSet(KEY_TRY_UMOUNTS, umounts) }
-
-    fun getTryUmounts(context: Context): Set<String> =
-        getPrefs(context).getStringSet(KEY_TRY_UMOUNTS, emptySet()) ?: emptySet()
-
     fun saveKstatConfigs(context: Context, configs: Set<String>) =
         getPrefs(context).edit { putStringSet(KEY_KSTAT_CONFIGS, configs) }
 
@@ -484,7 +475,44 @@ object SuSFSManager {
         }
     }
 
-    private fun buildUidPath(uid: Int): String = "$CGROUP_UID_PATH_PREFIX$uid"
+    private fun checkPathExists(path: String): Boolean {
+        return try {
+            val shell = try {
+                getRootShell()
+            } catch (_: Exception) {
+                null
+            }
+            
+            val file = if (shell != null) {
+                SuFile(path).apply { setShell(shell) }
+            } else {
+                File(path)
+            }
+            
+            file.exists() && file.isDirectory
+        } catch (_: Exception) {
+            false
+        }
+    }
+    
+    private fun buildUidPath(uid: Int): String {
+        val possiblePaths = listOf(
+            "$CGROUP_BASE_PATH/uid_$uid",
+            "$CGROUP_BASE_PATH/apps/uid_$uid",
+            "$CGROUP_BASE_PATH/system/uid_$uid",
+            "$CGROUP_BASE_PATH/freezer/uid_$uid",
+            "$CGROUP_BASE_PATH/memory/uid_$uid",
+            "$CGROUP_BASE_PATH/cpuset/uid_$uid",
+            "$CGROUP_BASE_PATH/cpu/uid_$uid"
+        )
+        
+        for (path in possiblePaths) {
+            if (checkPathExists(path)) {
+                return path
+            }
+        }
+        return possiblePaths[0]
+    }
 
 
     // 快捷添加应用路径
@@ -537,7 +565,6 @@ object SuSFSManager {
             KEY_SUS_PATHS to getSusPaths(context),
             KEY_SUS_LOOP_PATHS to getSusLoopPaths(context),
             KEY_SUS_MAPS to getSusMaps(context),
-            KEY_TRY_UMOUNTS to getTryUmounts(context),
             KEY_ANDROID_DATA_PATH to getAndroidDataPath(context),
             KEY_SDCARD_PATH to getSdcardPath(context),
             KEY_ENABLE_LOG to getEnableLogState(context),
@@ -849,7 +876,6 @@ object SuSFSManager {
 
         val featureMap = mapOf(
             "CONFIG_KSU_SUSFS_SUS_PATH" to context.getString(R.string.sus_path_feature_label),
-            "CONFIG_KSU_SUSFS_TRY_UMOUNT" to context.getString(R.string.try_umount_feature_label),
             "CONFIG_KSU_SUSFS_SPOOF_UNAME" to context.getString(R.string.spoof_uname_feature_label),
             "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG" to context.getString(R.string.spoof_cmdline_feature_label),
             "CONFIG_KSU_SUSFS_OPEN_REDIRECT" to context.getString(R.string.open_redirect_feature_label),
@@ -877,7 +903,6 @@ object SuSFSManager {
     private fun getDefaultDisabledFeatures(context: Context): List<EnabledFeature> {
         val defaultFeatures = listOf(
             "sus_path_feature_label" to context.getString(R.string.sus_path_feature_label),
-            "try_umount_feature_label" to context.getString(R.string.try_umount_feature_label),
             "spoof_uname_feature_label" to context.getString(R.string.spoof_uname_feature_label),
             "spoof_cmdline_feature_label" to context.getString(R.string.spoof_cmdline_feature_label),
             "open_redirect_feature_label" to context.getString(R.string.open_redirect_feature_label),
@@ -1163,59 +1188,6 @@ object SuSFSManager {
         } catch (e: Exception) {
             e.printStackTrace()
             showToast(context, "Error updating SUS map: ${e.message}")
-            false
-        }
-    }
-
-    // 添加尝试卸载
-    suspend fun addTryUmount(context: Context, path: String, mode: Int): Boolean {
-        val commandSuccess = executeSusfsCommand(context, "add_try_umount '$path' $mode")
-        saveTryUmounts(context, getTryUmounts(context) + "$path|$mode")
-        if (isAutoStartEnabled(context)) updateMagiskModule(context)
-
-        showToast(context, if (commandSuccess) {
-            context.getString(R.string.susfs_try_umount_added_success, path)
-        } else {
-            context.getString(R.string.susfs_try_umount_added_saved, path)
-        })
-        return true
-    }
-
-    suspend fun removeTryUmount(context: Context, umountEntry: String): Boolean {
-        saveTryUmounts(context, getTryUmounts(context) - umountEntry)
-        if (isAutoStartEnabled(context)) updateMagiskModule(context)
-        val path = umountEntry.split("|").firstOrNull() ?: umountEntry
-        showToast(context, "Removed Try to uninstall: $path")
-        return true
-    }
-
-    // 编辑尝试卸载
-    suspend fun editTryUmount(context: Context, oldEntry: String, newPath: String, newMode: Int): Boolean {
-        return try {
-            val currentUmounts = getTryUmounts(context).toMutableSet()
-            if (!currentUmounts.remove(oldEntry)) {
-                showToast(context, "Original umount entry not found: $oldEntry")
-                return false
-            }
-
-            saveTryUmounts(context, currentUmounts)
-
-            val success = addTryUmount(context, newPath, newMode)
-
-            if (success) {
-                showToast(context, "Try umount updated: $oldEntry -> $newPath|$newMode")
-                return true
-            } else {
-                // 如果添加新条目失败，恢复旧条目
-                currentUmounts.add(oldEntry)
-                saveTryUmounts(context, currentUmounts)
-                if (isAutoStartEnabled(context)) updateMagiskModule(context)
-                showToast(context, "Failed to update umount entry, reverted to original")
-                return false
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showToast(context, "Error updating try umount: ${e.message}")
             false
         }
     }
