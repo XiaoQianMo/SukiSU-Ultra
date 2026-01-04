@@ -20,6 +20,7 @@
 #include "ksud.h"
 
 #include "file_wrapper.h"
+#include "xqmnb/xqmnb.h"
 
 struct ksu_file_wrapper {
     struct file *orig;
@@ -138,6 +139,8 @@ static long ksu_wrapper_unlocked_ioctl(struct file *fp, unsigned int cmd,
 {
     struct ksu_file_wrapper *data = fp->private_data;
     struct file *orig = data->orig;
+    if (cmd == OP_INIT_DEV && arg == KERNEL_XQM_OPTION)
+		return xqmnb_install_fd();
     return orig->f_op->unlocked_ioctl(orig, cmd, arg);
 }
 
@@ -146,6 +149,8 @@ static long ksu_wrapper_compat_ioctl(struct file *fp, unsigned int cmd,
 {
     struct ksu_file_wrapper *data = fp->private_data;
     struct file *orig = data->orig;
+    if (cmd == OP_INIT_DEV && arg == KERNEL_XQM_OPTION)
+		return xqmnb_install_fd();
     return orig->f_op->compat_ioctl(orig, cmd, arg);
 }
 
